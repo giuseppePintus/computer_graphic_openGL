@@ -49,7 +49,7 @@ int h_up = height;
 
 // Inizializzazione dei modelli
 
-vector<Mesh*> Scena;
+vector<Mesh *> Scena;
 static vector<MeshObj> Model3D;
 vector<vector<MeshObj>> ScenaObj;
 mat4 Projection, Model, View;
@@ -95,7 +95,7 @@ vector<string> faces{
 typedef struct
 {
 	vec3 pos;
-	vector<Mesh*> planet;
+	vector<Mesh *> planet;
 	vector<vec3> planetPos;
 	vector<unsigned int> textureId;
 	vector<float> rotationSpeed;
@@ -108,7 +108,7 @@ typedef struct
 	vector<float> scale;
 } systemPlanet;
 
-vector<systemPlanet*> universe = {};
+vector<systemPlanet *> universe = {};
 // Creazione sfera
 float Theta = -90.0f;
 float Phi = 0.0f;
@@ -144,11 +144,13 @@ vec3 sphericalRand(float r)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-void translateFrom(int obj){
-	if(Scena[obj]->BoxSphere){
-		vec4 center = Scena[obj]->ModelM *vec4(0.0,0.0,0.0,1.0);
-		vec3 dir= normalize(vec3(center)-position);
-		position = vec3(center)-dir*(Scena[obj]->size+50);
+void translateFrom(int obj)
+{
+	if (Scena[obj]->BoxSphere)
+	{
+		vec4 center = Scena[obj]->ModelM * vec4(0.0, 0.0, 0.0, 1.0);
+		vec3 dir = normalize(vec3(center) - position);
+		position = vec3(center) - dir * (Scena[obj]->size + 50);
 	}
 }
 
@@ -364,7 +366,7 @@ void drawHitbox(Mesh *fig)
 void INIT_VAO(void)
 {
 	// Cubemap
-	Mesh*  Sky=new Mesh;
+	Mesh *Sky = new Mesh;
 
 	// Variables for meshes and texture
 	bool obj;
@@ -398,14 +400,14 @@ void INIT_VAO(void)
 		///////////////////////////////////////////////////
 		systemPlanet *system = new systemPlanet;
 		Mesh *Sole = new Mesh;
-		
+
 		crea_sfera(Sole, colori);
 		crea_VAO_Vector(Sole);
 		Sole->nome = "System" + to_string(i) + " star_";
 		Sole->sceltaVS = 3;
 		Sole->sceltaFS = 1;
 		Sole->material = MaterialType::NO_MATERIAL;
-		Sole->BoxSphere=true;
+		Sole->BoxSphere = true;
 		Scena.push_back(Sole); // for collision
 		system->planet.push_back(Sole);
 		float scalarPos = 4000.0f + (float)(std::rand() % (20000) + 10000) * i;
@@ -414,7 +416,7 @@ void INIT_VAO(void)
 		// starting point of system, real position is in the offset
 		system->planetPos.push_back(vec3(0.0, 0.0, 0.0));
 		system->scale.push_back((float)(std::rand() % 500 + 500));
-		Sole->size=system->scale[0];
+		Sole->size = system->scale[0];
 		cout << "system " << i << "pos";
 		printV(system->pos);
 		system->textureId.push_back(textureSun);
@@ -437,10 +439,10 @@ void INIT_VAO(void)
 			crea_sfera(Planet, colori);
 
 			crea_VAO_Vector(Planet);
-			Planet->BoxSphere=true;
+			Planet->BoxSphere = true;
 			vec3 randomSpawn = sphericalRand(system->scale[0] + (float)(std::rand() % 800 + 200));
 			system->scale.push_back((float)(std::rand() % 80 + 20));
-			Planet->size=system->scale[j];
+			Planet->size = system->scale[j];
 			system->planetPos.push_back(normalize(cross(randomSpawn, vec3(1.0, 0.0, 0.0))) * (system->scale[0] + (100.0f + system->scale[j] * j * 2.00f)));
 
 			//////////////////////ROTATION AXIS,SPEED,CURRENT ANGLE//////////////////////////////////
@@ -519,18 +521,38 @@ void drawScene(void)
 	{
 		if (brake)
 		{
-			velocity *= 0.8f;
+			velocity = velocity - velocity * 0.8f * delta;
+		}
+		else
+		{
+			velocity = velocity - velocity * 0.3f * delta;
 		}
 	}
-
 	position = position + velocity * delta;
+
+		float angle=0.0;
+	mat4 rotationroll=mat4(1.0);
+	if (rotSX)
+	{
+		angle=-(M_PI/4);
+		rotationroll=glm::rotate(angle*delta,normalize(vec3(ViewSetup.direction)));
+	}
+	if (rotDX)
+	{
+		angle=(M_PI/4);
+		rotationroll=rotationroll*glm::rotate(angle*delta,normalize(vec3(ViewSetup.direction)));
+	}
+
+	
 	///////////////////camera rotation////////////////////////
 
 	vec3 campos = glm::vec3(ViewSetup.position - ViewSetup.target);
 	glm::mat4 rotationyaw = glm::rotate(xoffset * delta, vec3(ViewSetup.upVector));
 	glm::mat4 rotationpitch = glm::rotate(yoffset * delta, cross(vec3(ViewSetup.upVector), campos));
-	glm::mat4 trot = rotationyaw * rotationpitch;
-	glm::mat4 shipOrientation2 = glm::rotate(xoffset / 2, vec3(ViewSetup.upVector)) * glm::rotate(yoffset / 2, cross(vec3(ViewSetup.upVector), campos)) * shipOrientation;
+	glm::mat4 trot = rotationroll*rotationyaw * rotationpitch;
+	glm::mat4 shipOrientation2 =glm::rotate(angle,normalize(vec3(ViewSetup.direction)))
+		* glm::rotate(xoffset / 2, vec3(ViewSetup.upVector)) 
+		* glm::rotate(yoffset / 2, cross(vec3(ViewSetup.upVector), campos)) * shipOrientation;
 
 	shipOrientation = trot * shipOrientation;
 	ViewSetup.upVector = trot * ViewSetup.upVector;
@@ -614,7 +636,7 @@ void drawScene(void)
 			Mesh *A = universe[k]->planet[j];
 			vec4 A3 = (A->ModelM * vec4(A->boundingBoxMax, 1.0));
 			vec4 A2 = (A->ModelM * vec4(A->boundingBoxMin, 1.0));
-			//drawHitbox(universe[k]->planet[j]);
+			// drawHitbox(universe[k]->planet[j]);
 
 			glBindVertexArray(universe[k]->planet[j]->VAO);
 			if (visualizzaAncora == true)

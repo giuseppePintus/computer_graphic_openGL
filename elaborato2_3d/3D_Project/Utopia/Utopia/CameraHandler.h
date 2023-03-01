@@ -31,9 +31,7 @@ bool checkBoundingBox(Mesh *A, vec3 B)
 	*/
 if(A->BoxSphere){
 	vec4 center = A->ModelM *vec4(0.0,0.0,0.0,1.0);
-	float lenght= distance(vec3(center),B);
-	cout<<"distance  "<<lenght<<endl;
-	
+	float lenght= distance(vec3(center),B);	
 	return !(lenght>(A->size));
 	
 }
@@ -86,7 +84,6 @@ int checkCollision(vec4 pos)
 {
 	for (int i= 1; i < Scena.size(); i++)
 	{
-		cout<<"index: "<<i<<" size:"<<Scena.size()<<endl;
 		Mesh* entity = Scena.at(i);
 		// se ho una collisione fermo esco
 		if (checkBoundingBox(entity,pos))
@@ -249,7 +246,7 @@ void keyboardPressedEvent(unsigned char key, int x, int y)
 	// Ortogonal movemente
 	case 'w': // gas
 		//moveCameraForward();
-		gas = !gas;
+		gas = true;
 		break;
 	case 'a':
 		// moveCameraLeft();
@@ -385,7 +382,7 @@ void keyboardReleasedEvent(unsigned char key, int x, int y)
 			visualizzaAncora = false;
 			break;
 		case 'w': //gas
-			//gas = false;
+			gas = false;
 			break;
 		case 'a':
 			rotSX = false;
