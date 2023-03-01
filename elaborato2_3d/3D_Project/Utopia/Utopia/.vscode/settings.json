@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "cmath": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "*.tcc": "cpp",
+        "bitset": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "fstream": "cpp",
+        "istream": "cpp",
+        "streambuf": "cpp",
+        "functional": "cpp",
+        "valarray": "cpp",
+        "*.ipp": "cpp",
+        "vector": "cpp",
+        "random": "cpp"
+    }
+}
