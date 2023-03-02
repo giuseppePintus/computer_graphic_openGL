@@ -104,7 +104,7 @@ void creaNemico(int life)
 	Figura *alien = new Figura;
 	alien->size = vec3(40);
 	alien->nTriangles = 100;
-	alien->position = vec3(rand() % width/2, rand() % height/2, 0.0)+player.position;
+	alien->position = vec3(rand() % width / 2, rand() % height / 2, 0.0) + player.position;
 	alien->velocity = vec3(0.0, 0.0, 0.0);
 	alien->linearAcc = 60;
 	alien->linearVel = 150;
@@ -158,7 +158,7 @@ void removeDead(std::vector<Figura> &entity)
 }
 void drawHitbox(Figura *fig)
 {
-	Figura *hitbox= new Figura;
+	Figura *hitbox = new Figura;
 	hitbox->vertici.push_back(vec3(fig->corner_b.x, fig->corner_b.y, 0.0));
 	hitbox->colors.push_back(vec4(1.0, 0.0, 0.0, 1.0));
 	hitbox->vertici.push_back(vec3(fig->corner_b.x, fig->corner_t.y, 0.0));
@@ -198,7 +198,7 @@ void drawHitbox(Figura *fig)
 
 	hitbox->vertici.push_back(vec3(Aminx, Aminy, 0.0));
 	hitbox->vertici.push_back(vec3(Amaxx, Aminy, 0.0));
-	hitbox->vertici.push_back(vec3(Amaxx, Amaxy, 0.0));	
+	hitbox->vertici.push_back(vec3(Amaxx, Amaxy, 0.0));
 	hitbox->vertici.push_back(vec3(Aminx, Amaxy, 0.0));
 	hitbox->vertici.push_back(vec3(Aminx, Aminy, 0.0));
 	hitbox->colors.push_back(vec4(1.0, 0.0, 0.0, 1.0));
@@ -207,15 +207,15 @@ void drawHitbox(Figura *fig)
 	hitbox->colors.push_back(vec4(1.0, 0.0, 0.0, 1.0));
 	hitbox->colors.push_back(vec4(1.0, 0.0, 0.0, 1.0));
 	hitbox->nv = hitbox->vertici.size();
-	
+
 	*/
 	crea_VAO_Vector(hitbox);
-	
+
 	glBindVertexArray(hitbox->VAO);
 	glDrawArrays(GL_LINE_STRIP, 0, hitbox->nv);
 	glBindVertexArray(0);
 	/*
-	*/
+	 */
 }
 
 void INIT_SHADER(void)
@@ -421,12 +421,24 @@ void myKeyboard(unsigned char key, int x, int y)
 		break;
 	}
 }
-void aim(int x, int y)
+void aim(int button, int state, int x, int y)
 {
 	float viewX = ((float)x / glutGet(GLUT_WINDOW_WIDTH)) * width;
 	float viewY = ((float)(glutGet(GLUT_WINDOW_HEIGHT) - y) / glutGet(GLUT_WINDOW_HEIGHT)) * height;
 	vec3 dir = normalize(vec3(viewX, viewY, 0.0) - player.position);
 	player.direction = -atan2(dir.x, dir.y);
+	switch (button)
+	{
+	// Con il tasto sinistro premuto si attiva la modalit� di trackball
+	case GLUT_LEFT_BUTTON:
+		if (timer - cooldown > 0.05)
+		{
+			creaProiettile(player.position, vec3(cos(player.direction + PI / 2), sin(player.direction + PI / 2), 0.0), vec3(0.0));
+			player.velocity -= player.acceleration * 0.25f;
+			cooldown = timer;
+		}
+		break;
+	}
 }
 void reset()
 {
@@ -471,7 +483,7 @@ void myfunc(int i)
 	{
 		entity = &*it;
 		updateEnemy(entity, delta);
-		if (checkBoundingBox(&player,entity ) && entity->live > 0)
+		if (checkBoundingBox(&player, entity) && entity->live > 0)
 		{ //
 			entity->live = 0;
 			player.live--;
@@ -485,7 +497,8 @@ void myfunc(int i)
 		int life = nEnemies / 10;
 		life += life <= 0 ? 1 : 0;
 		creaNemico(life);
-		if(nEnemies%10==0){
+		if (nEnemies % 10 == 0)
+		{
 			player.live++;
 		}
 	}
@@ -507,6 +520,7 @@ int main(int argc, char *argv[])
 	glutCreateWindow("space ship");
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(myKeyboard);
+	glutMouseFunc(aim);
 	glutPassiveMotionFunc(aim);
 	glutTimerFunc(5, myfunc, 0);
 
