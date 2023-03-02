@@ -28,14 +28,15 @@ void material_menu_function(int option)
 {
 	/*
 	if (selected_obj > -1)
-	{
-		Scena[selected_obj].material = (MaterialType)option;
+	{Scena[selected_obj].material = (MaterialType)option;
+		
 	if (selected_meshobj > -1)
 		for (int i = 0; i < ScenaObj[selected_meshobj].size(); i++)
 			ScenaObj[selected_meshobj][i].sceltaVS = shaders[option].value;
 	}*/
 	if (selected_obj > -1)
-		Scena[selected_obj]->sceltaVS = shaders[option].value;
+		//Scena[selected_obj]->sceltaVS = shaders[option].value;
+		Scena[selected_obj]->material = (MaterialType)option;
 		cout<<"index "<<selected_obj<<endl;
 
 }
@@ -58,6 +59,8 @@ void buildOpenGLMenu()
 	glutAddMenuEntry(materials[MaterialType::YELLOW].name.c_str(), MaterialType::YELLOW);
 	glutAddMenuEntry(materials[MaterialType::ROSA].name.c_str(), MaterialType::ROSA);
 	glutAddMenuEntry(materials[MaterialType::MARRONE].name.c_str(), MaterialType::MARRONE);
+	glutAddMenuEntry(materials[MaterialType::NO_MATERIAL].name.c_str(), MaterialType::NO_MATERIAL);
+
 
 	int shaderSubMenu = glutCreateMenu(shader_menu_function);
 	glutAddMenuEntry(shaders[ShaderOption::NONE].name.c_str(), ShaderOption::NONE);

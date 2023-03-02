@@ -134,7 +134,7 @@ void mouse(int button, int state, int x, int y)
 
 				// Interseco il raggio che esce dalla camera nella direzione del mouse con la sfera centrata nell'ancora di tutti gli oggetti
 				// posizionati nel mondo per individuare se c'� intersezione con l'oggetto
-				if (ray_sphere(ViewSetup.position, ray_wor, Scena[i]->ancora_world, raggio_sfera, &t_dist))
+				if (ray_sphere(ViewSetup.position, ray_wor, Scena[i]->ancora_world, Scena.at(i)->size, &t_dist))
 				{
 					//raysphere works only if the objects are present on the perimeter of the sphere, being inside or outside doesn't work correctly
 					

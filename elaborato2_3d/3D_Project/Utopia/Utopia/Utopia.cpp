@@ -33,7 +33,7 @@ float raggio_sfera = 50.0;
 // spaceship movement
 float xoffset = 0, yoffset = 0;
 float shipSpeed = 0.0f;
-float acceleration = 400.0;
+float acceleration = 1000.0;
 float maxVel = 1000.0f;
 bool gas = false, brake = false, rotDX = false, rotSX = false;
 vec3 velocity = vec3(0.0);
