@@ -440,6 +440,14 @@ void aim(int button, int state, int x, int y)
 		break;
 	}
 }
+void aim(int x, int y)
+{
+	float viewX = ((float)x / glutGet(GLUT_WINDOW_WIDTH)) * width;
+	float viewY = ((float)(glutGet(GLUT_WINDOW_HEIGHT) - y) / glutGet(GLUT_WINDOW_HEIGHT)) * height;
+	vec3 dir = normalize(vec3(viewX, viewY, 0.0) - player.position);
+	player.direction = -atan2(dir.x, dir.y);
+
+}
 void reset()
 {
 	player.live = 5;
