@@ -34,7 +34,7 @@
         script to install the necessary dependencies and
         libraries for the app, and to create the executable
         application.</li>
-    <li>Run the command <code>./app</code>
+    <li>Run the command <code>./exe</code>
         to launch the app.</li>
 </ol>
 <h2>How to Use</h2>
