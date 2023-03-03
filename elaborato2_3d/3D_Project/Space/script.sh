@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # List of required libraries
-LIBS=(libglu1-mesa-dev libglew-dev libgl1-mesa-dev freeglut3-dev)
+LIBS=(libglu1-mesa-dev libglew-dev libgl1-mesa-dev freeglut3-dev libassimp-dev)
 
 # Verify presence of required libraries
 for lib in ${LIBS[@]}; do
