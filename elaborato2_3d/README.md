@@ -42,15 +42,11 @@
     <li>Once
         the app is launched, you will be able to see the 3D
         scene.</li>
-    <li>Use your mouse or trackpad to zoom,
+    <li>Use your mouse or trackpad to 
         rotate, and pan the scene.</li>
-    <li>Use the mouse scroll
-        wheel or touchpad to zoom in and out.</li>
-    <li>Click and
-        drag with the left mouse button to rotate the scene.</li>
-    <li>Hold
-        the right mouse button and move your mouse to pan the
-        scene.</li>
+        <li>Use W or S  to 
+        accelerate or break, and A or D to rotate yourself.</li>
+  
 </ol>
 <h2>Contributing</h2>
 <p>If you would
