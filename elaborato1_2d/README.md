@@ -31,7 +31,7 @@
         script to install the necessary dependencies and libraries for
         the app, and to create the executable application.</li>
     <li>Run
-        the command <code>./app</code> to launch the app.</li>
+        the command <code>./exe</code> to launch the app.</li>
 </ol>
 <h2>How
     to Play</h2>
