@@ -23,7 +23,7 @@
     <li>2D
         Game App: This app is a simple 2D game where the player can move
         around using the mouse and shoot with the left click. The goal
-        of the game is to collect power-ups and destroy enemies to boost
+        of the game is to destroy enemies to boost
         your score.</li>
 </ul>
 <h2>System Requirements</h2>
