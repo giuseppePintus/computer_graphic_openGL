@@ -9,7 +9,7 @@
     <li>Mouse movement:
         Use the mouse to move around in the 2D game world.</li>
     <li>Shooting:
-        Use the left mouse button to shoot and destroy enemies.</li>
+        Use the space bar to shoot and destroy enemies.</li>
     <li>User-friendly interface: The app's
         interface is designed to be user-friendly, making it easy to
         navigate and use.</li>
@@ -19,7 +19,7 @@
     <li>Operating
         System: Windows, macOS, or Linux.</li>
     <li>Graphics Card: Your
-        graphics card should support OpenGL 2.1 or higher.</li>
+        graphics card should support OpenGL 3.1 or higher.</li>
 </ul>
 <h2>Installation</h2>
 <p>To
@@ -38,9 +38,8 @@
 <ol>
     <li>Once the app is launched, you will be able to
         see the 2D game world.</li>
-    <li>Use the mouse to move around and
-        explore the game world.</li>
-    <li>Use the left mouse button to
+    <li>Use the mouse to move around </li>
+    <li>Use the space bar to
         shoot and destroy enemies.</li>
 </ol>
 <h2>Contributing</h2>
