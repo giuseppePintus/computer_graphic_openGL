@@ -1,3 +1,8 @@
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#include <cmath>
+#endif //!_USE_MATH_DEFINES
+
 #include <iostream>
 // #include <windows.h>
 #include "AssimpLoader.h"
