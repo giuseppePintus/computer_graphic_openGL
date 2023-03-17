@@ -1,0 +1,19 @@
+CC = g++
+CFLAGS = -g
+LIBS = -lglu32 -lglew32 -lopengl32 -lfreeglut -lassimp
+
+SRCS = $(wildcard *.cpp)
+OBJS = $(patsubst %.cpp,%.o,$(SRCS))
+
+TARGET = exe.exe
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	del $(OBJS) $(TARGET)
